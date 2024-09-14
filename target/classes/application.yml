@@ -1,0 +1,29 @@
+server:
+  port: 8082
+
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      username: root
+      password: password
+      port: 27019
+      host: localhost
+      database: mongo
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:file:./data/demo
+    driverClassName: org.h2.Driver
+    username: root
+    password: pass
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false

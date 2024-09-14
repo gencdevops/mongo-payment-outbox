@@ -1,0 +1,43 @@
+version: '3.8'
+
+
+services:
+
+
+  mongo-payment:
+    image: mongo:5.0
+    container_name: mongo-payment
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=payment_db
+    restart: always
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongo_data:/data/db
+      - dev_archive:/Databases/dev.archive
+      - production:/Databases/production
+
+  mongo-express:
+    image: mongo-express
+    container_name: mexpress
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_URL=mongodb://root:password@mongo-payment:27017/?authSource=admin
+      - ME_CONFIG_BASICAUTH_USERNAME=mexpress
+      - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
+    restart: always
+    depends_on:
+      - mongo-payment
+    ports:
+      - "8081:8081"
+
+
+
+
+volumes:
+  mongo_data:
+  dev_archive:
+  production:
